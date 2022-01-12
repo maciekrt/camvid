@@ -52,7 +52,13 @@ class UpsampleUNetBlock(nn.Module):
         self.out_channels = out_channels
         self.output_size = output_size
         self.hook_stored = hook_stored
-        self.conv_transpose1 = nn.ConvTranspose2d(in_channels=self.in_channels,out_channels=self.out_channels, kernel_size=(3,3), stride=(2,2), padding=(1,1))
+        self.conv_transpose1 = nn.ConvTranspose2d(
+            in_channels=self.in_channels,
+            out_channels=self.out_channels,
+            kernel_size=(3,3),
+            stride=(2,2),
+            padding=(1,1)
+        )
         if activation == "relu":
             self.activation = nn.ReLU()
         elif activation == "mish":
@@ -111,9 +117,6 @@ class UNet(nn.Module):
             layer_output_channels = dims[name][1][0]
             input_size = dims[name][0][-2:]
             output_size = dims[name][1][-2:]
-#             print("skip_channels:", last)
-#             print("input_size:", input_size)
-#             print("output_size", output_size)
             upsample = UpsampleUNetBlock(
                 in_channels=layer_output_channels+last,
                 out_channels=layer_input_channels,
