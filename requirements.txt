@@ -1,0 +1,9 @@
+ipywidgets
+widgetsnbextension
+pandas-profiling
+pytorch_lightning
+timm
+pandas
+wandb
+albumentations
+rich==10.2.2
