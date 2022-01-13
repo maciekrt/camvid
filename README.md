@@ -20,7 +20,7 @@ In order not to clutter the training notebook all the dependencies are available
 
 ## Results
 
-Using the implementation we were able to obtain a 0.92 accuracy model which is on par with a model trained in the `fast.ai` course. 
+Using the implementation we were able to obtain a 0.90 test set and 0.92 validation set accuracy model which is on par with a model trained in the `fast.ai` course. 
 
 ## Little future improvements
 

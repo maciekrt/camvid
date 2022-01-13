@@ -88,7 +88,7 @@ class UNetModel(pl.LightningModule):
         masks_logits = self.unet(imgs)
         loss = self.loss(masks_logits, masks_gt)
         self.log("train_loss", loss)
-        return loss
+        return {"loss": loss}
     
     def validation_step(self, batch, batch_idx):
         # training_step defined the train loop.
@@ -100,7 +100,19 @@ class UNetModel(pl.LightningModule):
         self.camvid_accuracy(preds, masks_gt)
         self.log("val_loss", loss)
         self.log("val_acc", self.camvid_accuracy)
-        return loss
+        return {"loss": loss, "acc": self.camvid_accuracy}
+    
+    def test_step(self, batch, batch_idx):
+        # training_step defined the train loop.
+        # It is independent of forward
+        imgs, masks_gt, _ = batch
+        masks_logits = self.unet(imgs)
+        loss = self.loss(masks_logits, masks_gt)
+        preds = masks_logits.argmax(dim=1)
+        self.camvid_accuracy(preds, masks_gt)
+        self.log("test_acc", self.camvid_accuracy)
+        self.log("test_loss", loss)
+        return {"loss": loss, "acc": self.camvid_accuracy}
     
     
 if __name__=="__main__":
